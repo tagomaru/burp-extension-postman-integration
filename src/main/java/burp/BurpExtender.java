@@ -15,13 +15,13 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
 	private PrintWriter stderr;
 
 	// Extension Name
-	public static final String EXTENSION_NAME = "POSTMAN Collaborator";
+	public static final String EXTENSION_NAME = "Postman Integration";
 
 	// Extension Version
 	public static final String VERSION_INFO = "1.0";
 	
 	// JFrame Title
-	public static final String FRAME_TITLE = "POSTMAN Collaborator";
+	public static final String FRAME_TITLE = "Postman Integration";
 	
 	private IBurpExtenderCallbacks callbacks;
 	
@@ -47,7 +47,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
 	 */
 	public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
 		List<JMenuItem> menuList = new ArrayList<>();
-		JMenuItem item = new JMenuItem("POSTMAN Collaborator");
+		JMenuItem item = new JMenuItem("Export as Postman Collection");
 
 		item.addActionListener(e -> {
 			IHttpRequestResponse[] requestResponseArray = invocation.getSelectedMessages();

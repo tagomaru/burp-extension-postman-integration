@@ -103,10 +103,10 @@ public class PostmanFrame extends JFrame implements MouseMotionListener, MouseLi
 		mainPanel.setLayout(null);
 		mainPanel.addMouseMotionListener(this);
 		mainPanel.addMouseListener(this);
-		titleLabel = new Label("POSTMAN Collaborator Setting");
+		titleLabel = new Label("Postman Integration Setting");
 		titleLabel.setForeground(new Color(229, 137, 0));
 		titleLabel.setFont(new Font("Dialog", Font.BOLD, 15));
-		noteLabel = new JLabel("These settings let you configure POSTMAN Collaborator.");
+		noteLabel = new JLabel("These settings let you configure Postman Integration.");
 		encodingLabel = new JLabel("Encoding:");
 		encodingTextField = new JTextField(encoding);
 		colNameLabel = new JLabel("Collection Name:");

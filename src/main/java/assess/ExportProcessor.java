@@ -81,7 +81,7 @@ public class ExportProcessor {
 		}
 
 		/* generate file */
-		filechooser.setDialogTitle("Save POSTMAN json file.");
+		filechooser.setDialogTitle("Save Postman Collection json file.");
 		filechooser.setSelectedFile(new File(""));
 
 		int selected = filechooser.showSaveDialog(null);
