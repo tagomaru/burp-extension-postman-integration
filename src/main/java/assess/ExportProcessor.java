@@ -43,7 +43,7 @@ public class ExportProcessor {
 	private String colName;
 	private Map<String, Folder> folderMap = new HashMap<>();
 
-	public static final String[] EXCLUDED_HEADERS = { "Host", "User-Agent", "Content-Length", "Connection", "Accept-Encoding", "Origin" };
+	public static final String[] EXCLUDED_HEADERS = { "Content-Length", "Connection", "Accept-Encoding" };
 
 	private static JFileChooser filechooser = new JFileChooser();
 
