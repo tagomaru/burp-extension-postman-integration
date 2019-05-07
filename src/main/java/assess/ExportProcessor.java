@@ -135,9 +135,9 @@ public class ExportProcessor {
 
 		Request reqModel = new Request();
 
-		// support only json, kvm, and multipart
+		// support only json, kvm, xml, and multipart
 		byte cType = iReqInfo.getContentType();
-		if (cType == IRequestInfo.CONTENT_TYPE_JSON || cType == IRequestInfo.CONTENT_TYPE_MULTIPART) {
+		if (cType == IRequestInfo.CONTENT_TYPE_JSON || cType == IRequestInfo.CONTENT_TYPE_MULTIPART || cType == IRequestInfo.CONTENT_TYPE_XML) {
 			int bodyOffset = iReqInfo.getBodyOffset();
 			byte[] reqBodyBytes = new byte[reqBytes.length - bodyOffset];
 			System.arraycopy(reqBytes, bodyOffset, reqBodyBytes, 0, reqBytes.length - bodyOffset);
