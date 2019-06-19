@@ -3,7 +3,7 @@ ExtensionType: 1
 Name: Postman Integration
 RepoName: postman-integration
 ScreenVersion: 1.2
-SerialVersion: 2
+SerialVersion: 3
 MinPlatformVersion: 0
 ProOnly: False
 Author: Teruhiro Tagomori@NRI SecureTechnologies
