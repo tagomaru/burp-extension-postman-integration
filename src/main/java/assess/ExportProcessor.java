@@ -43,7 +43,7 @@ public class ExportProcessor {
 	private String colName;
 	private Map<String, Folder> folderMap = new HashMap<>();
 
-	public static final String[] EXCLUDED_HEADERS = { "Host", "User-Agent", "Content-Length", "Connection", "Accept-Encoding", "Origin" };
+	public static final String[] EXCLUDED_HEADERS = { "Content-Length", "Connection", "Accept-Encoding" };
 
 	private static JFileChooser filechooser = new JFileChooser();
 
@@ -135,9 +135,9 @@ public class ExportProcessor {
 
 		Request reqModel = new Request();
 
-		// support only json, kvm, and multipart
+		// support only json, kvm, xml, and multipart
 		byte cType = iReqInfo.getContentType();
-		if (cType == IRequestInfo.CONTENT_TYPE_JSON || cType == IRequestInfo.CONTENT_TYPE_MULTIPART) {
+		if (cType == IRequestInfo.CONTENT_TYPE_JSON || cType == IRequestInfo.CONTENT_TYPE_MULTIPART || cType == IRequestInfo.CONTENT_TYPE_XML) {
 			int bodyOffset = iReqInfo.getBodyOffset();
 			byte[] reqBodyBytes = new byte[reqBytes.length - bodyOffset];
 			System.arraycopy(reqBytes, bodyOffset, reqBodyBytes, 0, reqBytes.length - bodyOffset);
