@@ -26,7 +26,9 @@ import assess.model.BodyKeyValue;
 import assess.model.Collection;
 import assess.model.Folder;
 import assess.model.Request;
+import assess.model.RequestItem;
 import assess.model.RequestSource;
+import assess.model.FolderItem;
 import burp.IBurpExtenderCallbacks;
 import burp.IExtensionHelpers;
 import burp.IHttpRequestResponse;
@@ -64,20 +66,35 @@ public class ExportProcessor {
 			reqModelList.add(generateRequest(reqRes, i++));
 		}
 
-		/* Generate collection and set requests */
-		Collection col = new Collection();
-		col.setName(colName);
+		/* Generate collection */
+		Collection col = new Collection(colName);
+
+		// Set request to collection or folder
 		for (Request req : reqModelList) {
-			req.setCollectionId(col.getId());
-			if(req.getFolder() == null) {
-				col.getOrder().add(req.getId());
+			// req.setCollectionId(col.getId());
+			// if(req.getFolder() == null) {
+			// 	col.getOrder().add(req.getId());
+			// }
+			RequestItem reqItem = new RequestItem();
+			reqItem.setName(req.getName());
+			reqItem.setRequest(req);
+			String folderName = req.getFolder();
+			if (folderName == null || folderName.equals("")) {
+				// set request to collection
+				col.getItem().add(reqItem);
+			} else {
+				// set request to folder
+				folderMap.get(folderName).setRequestItem(reqItem);
 			}
-			col.getRequests().add(req);
+			// col.getRequests().add(req);
 		}
 		
 		/* Set folder to collection */
 		for(Map.Entry<String, Folder> folder : folderMap.entrySet()) {
-			col.getFolders().add(folder.getValue());
+			FolderItem folderItem = new FolderItem();
+			folderItem.setName((folder.getValue().getName()));
+			folderItem.setFolder((folder.getValue()));
+			col.getItem().add(folderItem);
 		}
 
 		/* generate file */
@@ -158,7 +175,7 @@ public class ExportProcessor {
 		reqModel.setMethod(iReqInfo.getMethod());
 
 		// Set headers
-		StringBuilder sb = new StringBuilder();
+		List<Map<String, String>> headerList = new ArrayList<>();
 		for (int num = 1; num < iReqInfo.getHeaders().size(); num++) { // exclude
 																		// request
 																		// line
@@ -166,27 +183,34 @@ public class ExportProcessor {
 																		// "POST
 																		// /hoge
 																		// HTTP/1.1"
-			String header = iReqInfo.getHeaders().get(num);
-			if (!Arrays.asList(EXCLUDED_HEADERS).contains(header.split(":")[0]))
-				sb.append(iReqInfo.getHeaders().get(num) + "\n");
+			String[] header = iReqInfo.getHeaders().get(num).split(": ");
+			Map<String, String> headerMap = new HashMap<>();
+			if (!Arrays.asList(EXCLUDED_HEADERS).contains(header[0])) {
+				headerMap.put("key", header[0]);
+				headerMap.put("value", header[1]);
+				headerList.add(headerMap);
+			}
+				// sb.append(iReqInfo.getHeaders().get(num) + "\n");
 		}
-		reqModel.setHeaders(sb.toString());
+		// reqModel.setHeader(sb.toString());
+		reqModel.setHeader(headerList);
 
 		// Set URL
 		reqModel.setUrl(getURL(reqSource.getReq()));
-
+	
 		// Set Name
 		reqModel.setName(name);
 		
-		// Set folder
+		// Set folder name
 		String folderName = reqSource.getFolderName();
 		if(folderName != null && !folderName.equals("")) {
 			if(!folderMap.containsKey(folderName)) {
 				folderMap.put(folderName, new Folder(folderName));
 			}
 			Folder folder = folderMap.get(folderName);
-			folder.getOrder().add(reqModel.getId());
-			reqModel.setFolder(folder.getId());
+
+			reqModel.setFolder(folderName);
+			// folder.setRequest(reqModel);
 		}
 		
 		return reqModel;

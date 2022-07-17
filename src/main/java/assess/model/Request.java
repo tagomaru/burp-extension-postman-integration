@@ -7,20 +7,20 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Request {
-	public String getId() {
-		return id;
+	// public String getId() {
+	// 	return id;
+	// }
+
+	// public void setId(String id) {
+	// 	this.id = id;
+	// }
+
+	public List<Map<String, String>> getHeader() {
+		return header;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getHeaders() {
-		return headers;
-	}
-
-	public void setHeaders(String headers) {
-		this.headers = headers;
+	public void setHeader(List<Map<String, String>> header) {
+		this.header = header;
 	}
 
 	public String getUrl() {
@@ -31,21 +31,21 @@ public class Request {
 		this.url = url;
 	}
 
-	public String getPreRequestScript() {
-		return preRequestScript;
-	}
+	// public String getPreRequestScript() {
+	// 	return preRequestScript;
+	// }
 
-	public void setPreRequestScript(String preRequestScript) {
-		this.preRequestScript = preRequestScript;
-	}
+	// public void setPreRequestScript(String preRequestScript) {
+	// 	this.preRequestScript = preRequestScript;
+	// }
 
-	public Map<String, Object> getPathVariables() {
-		return pathVariables;
-	}
+	// public Map<String, Object> getPathVariables() {
+	// 	return pathVariables;
+	// }
 
-	public void setPathVariables(Map<String, Object> pathVariables) {
-		this.pathVariables = pathVariables;
-	}
+	// public void setPathVariables(Map<String, Object> pathVariables) {
+	// 	this.pathVariables = pathVariables;
+	// }
 
 	public String getMethod() {
 		return method;
@@ -127,13 +127,13 @@ public class Request {
 		this.description = description;
 	}
 
-	public String getCollectionId() {
-		return collectionId;
-	}
+	// public String getCollectionId() {
+	// 	return collectionId;
+	// }
 
-	public void setCollectionId(String collectionId) {
-		this.collectionId = collectionId;
-	}
+	// public void setCollectionId(String collectionId) {
+	// 	this.collectionId = collectionId;
+	// }
 
 	public List<Object> getResponses() {
 		return responses;
@@ -151,11 +151,11 @@ public class Request {
 		this.rawModeData = rawModeData;
 	}
 
-	private String id;
-	private String headers;
+	// private String id;
+	private List<Map<String, String>> header = new ArrayList<>();
 	private String url;
-	private String preRequestScript = null;
-	private Map<String, Object> pathVariables = new HashMap<String, Object>();
+	// private String preRequestScript = null;
+	// private Map<String, Object> pathVariables = new HashMap<String, Object>();
 	private String method;
 	private List<BodyKeyValue> data = new ArrayList<>();
 	private String dataMode;
@@ -164,11 +164,11 @@ public class Request {
 	private String currentHelper = "normal";
 	private Map<String, Object> helperAttributes = new HashMap<String, Object>();
 	private int time = 0;
-	private String name;
+	private transient String name;
 	private String description = "";
-	private String collectionId;
+	// private String collectionId;
 	private List<Object> responses = new ArrayList<>();
-	private String folder = null;
+	private transient String folder = null;
 	public String getFolder() {
 		return folder;
 	}
@@ -182,6 +182,6 @@ public class Request {
 	public Request() {
 		super();
 		// generate UUID
-		this.id = UUID.randomUUID().toString();
+		// this.id = UUID.randomUUID().toString();
 	}
 }
