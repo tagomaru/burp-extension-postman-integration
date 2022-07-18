@@ -19,14 +19,14 @@ public class BodyKeyValue {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public boolean isEnabled() {
-		return enabled;
+	public boolean isDisabled() {
+		return this.disabled;
 	}
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 	private String key;
 	private String value;
 	private String type = "text";
-	private boolean enabled = true;
+	private boolean disabled = false;
 }
