@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Body {
     private List<BodyKeyValue> urlencoded = new ArrayList<>();
     private String mode;
+    private String raw;
 
     public void setMode(String mode) {
         this.mode = mode;
@@ -23,4 +24,11 @@ public class Body {
         return this.urlencoded;
     }
 
+    public void setRaw(String raw) {
+        this.raw = raw;
+    }
+
+    public String getRaw() {
+        return this.raw;
+    }
 }

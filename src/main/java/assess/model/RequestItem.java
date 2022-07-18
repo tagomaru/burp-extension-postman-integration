@@ -7,10 +7,6 @@ public class RequestItem extends Item {
 		this.request = req;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public RequestItem() {
 		super();
 	}

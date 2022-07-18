@@ -1,17 +1,21 @@
 package assess.model;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class FolderItem extends Item {
-	private Folder item;
+	private List<RequestItem> item = new ArrayList<>();
 	
-	public void setFolder(Folder folder) {
-		this.item = folder;
+	public void addRequest(RequestItem reqItem) {
+		this.item.add(reqItem);
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public List<RequestItem> getItem() {
+		return this.item;
 	}
 
-	public FolderItem() {
+	public FolderItem(String name) {
 		super();
+		this.name = name;
 	}
 }

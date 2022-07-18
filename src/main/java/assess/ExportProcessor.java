@@ -25,7 +25,6 @@ import com.google.gson.GsonBuilder;
 import assess.model.Body;
 import assess.model.BodyKeyValue;
 import assess.model.Collection;
-import assess.model.Folder;
 import assess.model.Request;
 import assess.model.RequestItem;
 import assess.model.RequestSource;
@@ -44,7 +43,7 @@ public class ExportProcessor {
 	private IBurpExtenderCallbacks callbacks;
 	private String encoding;
 	private String colName;
-	private Map<String, Folder> folderMap = new HashMap<>();
+	private Map<String, FolderItem> folderMap = new HashMap<>();
 
 	public static final String[] EXCLUDED_HEADERS = { "Content-Length", "Connection", "Accept-Encoding" };
 
@@ -62,9 +61,9 @@ public class ExportProcessor {
 	public void process() throws Exception {
 		/* generate request */
 		List<Request> reqModelList = new ArrayList<>();
-		int i = 1;
+
 		for (RequestSource reqRes : reqLists) {
-			reqModelList.add(generateRequest(reqRes, i++));
+			reqModelList.add(generateRequest(reqRes));
 		}
 
 		/* Generate collection */
@@ -72,10 +71,6 @@ public class ExportProcessor {
 
 		// Set request to collection or folder
 		for (Request req : reqModelList) {
-			// req.setCollectionId(col.getId());
-			// if(req.getFolder() == null) {
-			// 	col.getOrder().add(req.getId());
-			// }
 			RequestItem reqItem = new RequestItem();
 			reqItem.setName(req.getName());
 			reqItem.setRequest(req);
@@ -85,17 +80,13 @@ public class ExportProcessor {
 				col.getItem().add(reqItem);
 			} else {
 				// set request to folder
-				folderMap.get(folderName).setRequestItem(reqItem);
+				folderMap.get(folderName).addRequest(reqItem);
 			}
-			// col.getRequests().add(req);
 		}
 		
 		/* Set folder to collection */
-		for(Map.Entry<String, Folder> folder : folderMap.entrySet()) {
-			FolderItem folderItem = new FolderItem();
-			folderItem.setName((folder.getValue().getName()));
-			folderItem.setFolder((folder.getValue()));
-			col.getItem().add(folderItem);
+		for(Map.Entry<String, FolderItem> folderItem : folderMap.entrySet()) {
+			col.getItem().add(folderItem.getValue());
 		}
 
 		/* generate file */
@@ -146,7 +137,7 @@ public class ExportProcessor {
 		JOptionPane.showMessageDialog(null, label, "Message", JOptionPane.PLAIN_MESSAGE, imageIcon);
 	}
 
-	private Request generateRequest(RequestSource reqSource, int i) throws Exception {
+	private Request generateRequest(RequestSource reqSource) throws Exception {
 		String name = reqSource.getReqName();
 		byte[] reqBytes = reqSource.getReq().getRequest();
 		IRequestInfo iReqInfo = this.helpers.analyzeRequest(reqBytes);
@@ -159,17 +150,15 @@ public class ExportProcessor {
 			int bodyOffset = iReqInfo.getBodyOffset();
 			byte[] reqBodyBytes = new byte[reqBytes.length - bodyOffset];
 			System.arraycopy(reqBytes, bodyOffset, reqBodyBytes, 0, reqBytes.length - bodyOffset);
-			reqModel.setRawModeData(new String(reqBodyBytes, encoding));
-
-			// reqModel.setDataMode("raw"); TG: fix later
-
+			Body body = new Body();
+			body.setMode("raw");
+			body.setRaw(new String(reqBodyBytes, encoding));
+			reqModel.setBody(body);
 		} else if (cType == IRequestInfo.CONTENT_TYPE_URL_ENCODED) {
-			// reqModel.setDataMode("urlencoded");
 			List<BodyKeyValue> bodyList = getRequestParams(iReqInfo);
 			Body body = new Body();
 			body.setMode("urlencoded");
 			body.setUrlencoded(bodyList);
-			// reqModel.setData(bodyList);
 			reqModel.setBody(body);
 		} else if (cType == IRequestInfo.CONTENT_TYPE_NONE ){
 		} else {
@@ -210,12 +199,11 @@ public class ExportProcessor {
 		String folderName = reqSource.getFolderName();
 		if(folderName != null && !folderName.equals("")) {
 			if(!folderMap.containsKey(folderName)) {
-				folderMap.put(folderName, new Folder(folderName));
+				// create folder
+				folderMap.put(folderName, new FolderItem(folderName));
 			}
-			Folder folder = folderMap.get(folderName);
 
 			reqModel.setFolder(folderName);
-			// folder.setRequest(reqModel);
 		}
 		
 		return reqModel;
