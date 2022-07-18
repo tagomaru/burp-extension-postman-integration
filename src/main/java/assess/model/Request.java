@@ -55,21 +55,21 @@ public class Request {
 		this.method = method;
 	}
 
-	public List<BodyKeyValue> getData() {
-		return data;
-	}
+	// public List<BodyKeyValue> getData() {
+	// 	return data;
+	// }
 
-	public void setData(List<BodyKeyValue> data) {
-		this.data = data;
-	}
+	// public void setData(List<BodyKeyValue> data) {
+	// 	this.data = data;
+	// }
 
-	public String getDataMode() {
-		return dataMode;
-	}
+	// public String getDataMode() {
+	// 	return dataMode;
+	// }
 
-	public void setDataMode(String dataMode) {
-		this.dataMode = dataMode;
-	}
+	// public void setDataMode(String dataMode) {
+	// 	this.dataMode = dataMode;
+	// }
 
 	public int getVersion() {
 		return version;
@@ -151,14 +151,23 @@ public class Request {
 		this.rawModeData = rawModeData;
 	}
 
+	public void setBody(Body body) {
+		this.body = body;
+	}
+
+	public Body getBody() {
+		return this.body;
+	}
+
 	// private String id;
 	private List<Map<String, String>> header = new ArrayList<>();
 	private String url;
 	// private String preRequestScript = null;
 	// private Map<String, Object> pathVariables = new HashMap<String, Object>();
 	private String method;
-	private List<BodyKeyValue> data = new ArrayList<>();
-	private String dataMode;
+	// private List<BodyKeyValue> data = new ArrayList<>();
+	// private String dataMode;
+	private Body body;
 	private int version = 2;
 	private String tests = null;
 	private String currentHelper = "normal";

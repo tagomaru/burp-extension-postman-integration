@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import assess.model.Body;
 import assess.model.BodyKeyValue;
 import assess.model.Collection;
 import assess.model.Folder;
@@ -160,12 +161,16 @@ public class ExportProcessor {
 			System.arraycopy(reqBytes, bodyOffset, reqBodyBytes, 0, reqBytes.length - bodyOffset);
 			reqModel.setRawModeData(new String(reqBodyBytes, encoding));
 
-			reqModel.setDataMode("raw");
+			// reqModel.setDataMode("raw"); TG: fix later
 
 		} else if (cType == IRequestInfo.CONTENT_TYPE_URL_ENCODED) {
-			reqModel.setDataMode("urlencoded");
+			// reqModel.setDataMode("urlencoded");
 			List<BodyKeyValue> bodyList = getRequestParams(iReqInfo);
-			reqModel.setData(bodyList);
+			Body body = new Body();
+			body.setMode("urlencoded");
+			body.setUrlencoded(bodyList);
+			// reqModel.setData(bodyList);
+			reqModel.setBody(body);
 		} else if (cType == IRequestInfo.CONTENT_TYPE_NONE ){
 		} else {
 			throw new Exception("[" + reqSource.getReqName() +"] This content type is not supported.");			
