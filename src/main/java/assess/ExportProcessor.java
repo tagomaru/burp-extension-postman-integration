@@ -184,9 +184,7 @@ public class ExportProcessor {
 				headerMap.put("value", header[1]);
 				headerList.add(headerMap);
 			}
-				// sb.append(iReqInfo.getHeaders().get(num) + "\n");
 		}
-		// reqModel.setHeader(sb.toString());
 		reqModel.setHeader(headerList);
 
 		// Set URL

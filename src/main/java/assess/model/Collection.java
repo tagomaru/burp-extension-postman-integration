@@ -38,6 +38,5 @@ public class Collection {
 	public Collection(String name) {
 		super();
 		this.info = new Info(name);
-		// this.id = UUID.randomUUID().toString();
 	}
 }

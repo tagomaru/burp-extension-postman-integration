@@ -13,8 +13,6 @@ public class Request {
 	private Body body;
 	private transient String name;
 	private transient String folder = null;
-	private String dataMode;
-	private String rawModeData = "";
 
 	public List<Map<String, String>> getHeader() {
 		return header;
@@ -40,28 +38,12 @@ public class Request {
 		this.method = method;
 	}
 
-	public String getDataMode() {
-		return this.dataMode;
-	}
-
-	public void setDataMode(String dataMode) {
-		this.dataMode = dataMode;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getRawModeData() {
-		return this.rawModeData;
-	}
-
-	public void setRawModeData(String rawModeData) {
-		this.rawModeData = rawModeData;
 	}
 
 	public void setBody(Body body) {
