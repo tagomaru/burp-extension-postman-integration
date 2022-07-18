@@ -16,3 +16,4 @@ bin
 *.log
 *.swp
 *.bak
+build/resources/main
