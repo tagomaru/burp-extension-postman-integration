@@ -1,0 +1,12 @@
+Uuid: 6ae9ede3630949748842a43518e840a7
+ExtensionType: 1
+Name: Postman Integration
+RepoName: postman-integration
+ScreenVersion: 1.2
+SerialVersion: 3
+MinPlatformVersion: 0
+ProOnly: False
+Author: Teruhiro Tagomori@NRI SecureTechnologies
+ShortDescription: Integrate with the Postman tool by generating a collection file.
+EntryPoint: build/libs/postman-integration-1.2.jar
+BuildCommand: gradle jar
