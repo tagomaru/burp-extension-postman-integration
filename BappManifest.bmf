@@ -8,5 +8,5 @@ MinPlatformVersion: 0
 ProOnly: False
 Author: Teruhiro Tagomori@NRI SecureTechnologies
 ShortDescription: Integrate with the Postman tool by generating a collection file.
-EntryPoint: build/libs/postman-integration-1.2.jar
+EntryPoint: build/libs/postman-integration-2.0.jar
 BuildCommand: gradle jar
